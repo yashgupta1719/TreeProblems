@@ -1,0 +1,98 @@
+For bottom view of the tree we will use the vertical traversal approach with a difference that instead of storing a list for each distance value(Key of dictionary) in dictionary we will just replace the value of key with the most recent value from the queue instead of storing all the values in a list and this way we will get the bottom view also we can just do the vertical traversal store in the list in dictionary and get the last value of each list of dictionary which we will give the bottom view.In a way we are doing the same thing in both the cases just if we keep a variable instead of list we will get the last value automatically as only the last value will be stored and all other values will be replaced.//
+Just print  the last index value of list for each table[key][len(table[key])-1].val
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insert(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val<data):
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insert(root.right,data)
+        else:
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insert(root.left,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insert(r,arr[i])
+class Obj:
+    def __init__(self,nodevalue,dis):
+        self.node=nodevalue
+        self.d=dis
+def DiagonalView(root):
+    if(root==None):
+        return
+    table={}
+    queue=[]
+    queue.append(Obj(root,0))
+    while(len(queue)>0):
+        n=queue.pop(0)
+        table[n.d]=n.node
+        if(n.node.left!=None):
+            queue.append(Obj(n.node.left,n.d-1))
+        if(n.node.right!=None):
+            queue.append(Obj(n.node.right,n.d+1))
+    for index,value in enumerate(sorted(table)):
+        print(value,end=":")
+        print(table[value].val)
+DiagonalView(r)
+
+
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insert(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val<data):
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insert(root.right,data)
+        else:
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insert(root.left,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insert(r,arr[i])
+class Obj:
+    def __init__(self,nodevalue,dis):
+        self.node=nodevalue
+        self.d=dis
+def DiagonalView(root):
+    if(root==None):
+        return
+    table={}
+    queue=[]
+    queue.append(Obj(root,0))
+    while(len(queue)>0):
+        n=queue.pop(0)
+        try:
+            table[n.d].append(n.node)
+        except:
+            table[n.d]=[n.node]
+        if(n.node.left!=None):
+            queue.append(Obj(n.node.left,n.d-1))
+        if(n.node.right!=None):
+            queue.append(Obj(n.node.right,n.d+1))
+    for index,value in enumerate(sorted(table)):
+        print(value,end=":")
+        print(table[value][len(table[value])-1].val)
+DiagonalView(r)
+
+            
+            

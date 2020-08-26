@@ -1,0 +1,62 @@
+// We are iteratively traversing boundary, first left side then leaf nodes and then right nodes.
+But the order of printing in case of leaf node will be uneven or wrong because we are using a level order traversal using queue so for each node we are keeping it in the queue and then checking whether leaf or not because it may be the case that a leaf node in the right subtree may be found before then in right because it is level order so bo the left and right side of a node are checked simultaneoulsy so a leaf node in the right side may be found before and if we want to boundary traverse in an anticlockwise way as mentioned above the order will be wrong as was seen in the case of 23 node so we shoul use recursive solution. Take note that the leaf and root are not printed twice//
+import numpy as np
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insertNode(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val>=data):
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insertNode(root.left,data)
+        else:
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insertNode(root.right,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insertNode(r,arr[i])
+def inorder(root):
+    if(root):
+        inorder(root.left)
+        print(root.val)
+        inorder(root.right)
+def BoundaryTraversal(root):
+    if(root==None):
+        return 0
+    ans=[]
+    rinodes=[]
+    temp=root
+    ar=[]
+    while(temp.left!=None):
+        ans.append(temp.val)
+        temp=temp.left
+    temp1=root
+    ar.append(temp1)
+    while(len(ar)>0):
+        node=ar.pop(0)
+        if(node.left==None and node.right==None):
+            ans.append(node.val)
+        if(node.left!=None):
+            ar.append(node.left)
+        if(node.right!=None):
+            ar.append(node.right)
+    temp2=root.right
+    while(temp2.right!=None):
+        rinodes.append(temp2.val)
+        temp2=temp2.right
+    rinodes.reverse()
+    ans.extend(rinodes)
+    array=np.asarray(ans)
+    for i in range(len(array)):
+        print(array[i],end=" ")
+BoundaryTraversal(r)
+

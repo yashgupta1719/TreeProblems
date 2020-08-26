@@ -1,0 +1,47 @@
+class Node: 
+    # Constructor to create a new node 
+    def __init__(self, key): 
+        self.key = key 
+        self.left = None
+        self.right = None
+def getVerticalOrder(root, hd, m): 
+    if root is None: 
+        return
+    try: 
+        m[hd].append(root.key) 
+    except: 
+        m[hd] = [root.key] 
+    getVerticalOrder(root.left, hd-1, m) 
+      
+    # Store nodes in right subtree 
+    getVerticalOrder(root.right, hd+1, m)
+def printVerticalOrder(root): 
+    # Create a map and store vertical order in map using 
+    # function getVerticalORder() 
+    m = dict() 
+    hd = 0 
+    getVerticalOrder(root, hd, m)
+    # Traverse the map and print nodes at every horizontal 
+    # distance (hd) 
+    for index,value in enumerate(sorted(m)): #The index stores the values of index obtained after enumerate function and 
+    #The value stores sorted key values obtained in the form of list from dictionary that is returned and so in this way we are preserving the 
+    #sorted order of the dictionary in the list which contain several lists now using the sorted key values in the for loop which correspond to 
+    #the given index after sorting we can loop throught the dictionary(still a dictionary) as the corresponding key values are accessed in 
+    #in a way in which they are stored in the indexes and as we already know the indexes are made in way that preserves the sorted ordering of the 
+    #dictionary in list and so when index are printed in an order the corresponding key values stored are printed which are sorted.
+        print(index,end=". ")
+        print(value,end=": ")
+        for i in m[value]: 
+            print(i,end=" ")
+        print()
+root = Node(1) 
+root.left = Node(2) 
+root.right = Node(3) 
+root.left.left = Node(4) 
+root.left.right = Node(5) 
+root.right.left = Node(6) 
+root.right.right = Node(7) 
+root.right.left.right = Node(8) 
+root.right.right.right = Node(9) 
+print("Vertical order traversal is")
+printVerticalOrder(root) 

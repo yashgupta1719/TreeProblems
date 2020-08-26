@@ -1,0 +1,57 @@
+// So here what we are doing for we are using level order traversal for each level if any node is not traversed then and all the nodes of a level of a tree are unexplored then we take the previously explored node and if all the nodes of a level stored in queue are traversed then we take the previously explored node that is the last popped node. To keep a track of the number of nodes traversed in a level we make use of the count variable so if count == queue's length then that means 
+we are going to traverse a level so print the first traversed node or the first node encountered similarly if count==0 then that means we just finished traversing a level and so take the 
+node which was traversed last.//
+import numpy as np
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insertNode(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val<data):
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insertNode(root.right,data)
+        else:
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insertNode(root.left,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insertNode(r,arr[i])
+def TopTraversal(root):
+    if(root==None):
+        return
+    queue=[]
+    leftview=[]
+    rightview=[]
+    queue.append(root)
+    while(len(queue)>0):
+        count=len(queue)
+        comp=len(queue)
+        while(count>0):
+            ele=queue.pop(0)
+            if(count==comp):
+                leftview.append(ele.val)
+            if(ele.left!=None):
+                queue.append(ele.left)
+            if(ele.right!=None):
+                queue.append(ele.right)
+            count=count-1
+            if(count==0):
+                rightview.append(ele.val)
+    print("Right view:",end=" ")
+    print(rightview)
+    print("Left view:",end=" ")
+    print(leftview)
+TopTraversal(r)
+
+    
+                
+            

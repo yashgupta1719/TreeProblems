@@ -1,0 +1,103 @@
+// The code is same for top view as vertical traversal with only one improvisation that only the first element from each list of the dictionary with different keys as distance are taken.
+This uses vertical order traversal and just what we have to do is instead of storing all the nodes we will just keep the first inserted node and ignore the nodes that come after with the same distance value or we can just take the first element from the list.The code for first type is written at bottom//
+Just print  the 0th index value of list for each table[key][0].val
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insertNode(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val<data):
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insertNode(root.right,data)
+        else:
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insertNode(root.left,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insertNode(r,arr[i])
+class Obj:
+    def __init__(self,nodes,value):
+        self.node=nodes
+        self.dis=value
+def TopTraversal(root):
+    if(root==None):
+        return
+    table={}
+    queue=[]
+    queue.append(Obj(root,0))
+    while(len(queue)>0):
+        ele=queue.pop(0)
+        try:
+            table[ele.dis].append(ele.node)
+        except:
+            table[ele.dis]=[ele.node]
+        if(ele.node.left!=None):
+            queue.append(Obj(ele.node.left,ele.dis-1))
+        if(ele.node.right!=None):
+            queue.append(Obj(ele.node.right,ele.dis+1))
+    for index,value in enumerate(sorted(table)):
+     	print(value,end=":")
+       	print(table[value][0].val)
+TopTraversal(r)
+
+
+class Node:
+    def __init__(self,key):
+        self.right=None
+        self.left=None
+        self.val=key
+def insert(root,data):
+    if(root==None):
+        root=None
+    else:
+        if(root.val<data):
+            if(root.right==None):
+                root.right=Node(data)
+            else:
+                insert(root.right,data)
+        else:
+            if(root.left==None):
+                root.left=Node(data)
+            else:
+                insert(root.left,data)
+arr=list(map(int,input().split()))
+r=Node(arr[0])
+for i in range(1,len(arr)):
+    insert(r,arr[i])
+class Obj:
+    def __init__(self,nodevalue,dis):
+        self.node=nodevalue
+        self.d=dis
+def DiagonalView(root):
+    if(root==None):
+        return
+    table={}
+    queue=[]
+    queue.append(Obj(root,0))
+    while(len(queue)>0):
+        n=queue.pop(0)
+        if n.d not in table:
+            table[n.d]=n.node
+        if(n.node.left!=None):
+            queue.append(Obj(n.node.left,n.d-1))
+        if(n.node.right!=None):
+            queue.append(Obj(n.node.right,n.d+1))
+    for index,value in enumerate(sorted(table)):
+        print(value,end=":")
+        print(table[value].val)
+DiagonalView(r)
+
+            
+
+    
+                
+            
